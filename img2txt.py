@@ -42,7 +42,7 @@ u'\u259f',
 
 
 def main():
-    im = Image.open('../re.jpg').quantize(256)
+    im = Image.open('test.jpg').quantize(256)
     width, height = im.size
     ratio = float(blockwidth) / float(width)
     blockheight = int(ratio * height)
@@ -53,7 +53,7 @@ def main():
     print imr.size
     start = 50
     for hh in xrange(blockheight):
-        for ww in xrange(blockwidth):
+        for ww in xrange(blockwidth*2):
             part = imr.crop((ww*respb/2,hh*respb,(ww+1)*respb/2,(hh+1)*respb))
             imgq = part.quantize(2, kmeans=True)
             default_palette =  getPaletteInRgb(imgq)
