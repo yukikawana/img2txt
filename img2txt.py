@@ -3,8 +3,9 @@
 from PIL import Image, ImageDraw, ImageChops
 import numpy as np
 from numpy import linalg
-from extra import colortrans
 import sys
+sys.path.append('extra')
+import colortrans
 
 import pdb
 import os
