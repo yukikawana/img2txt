@@ -80,22 +80,25 @@ def draw(im, check=False, blockwidth=20):
 
     imr = im.resize((blockwidth * respb, blockheight * respb), Image.ANTIALIAS)
     checkcount = 0
+    line = ''
+    imgsnp = np.load('imgsnp.npy')
     for hh in xrange(blockheight):
         for ww in xrange(blockwidth*2):
             part = imr.crop((ww*respb/2,hh*respb,(ww+1)*respb/2,(hh+1)*respb))
-            imgq = part.quantize(2, kmeans=True)
+            imgq = part.quantize(2, kmeans=False)
             default_palette =  getPaletteInRgb(imgq)
             bg = hex(default_palette[0])[2:4].zfill(2)+hex(default_palette[1])[2:4].zfill(2)+hex(default_palette[2])[2:4].zfill(2)
             fg = hex(default_palette[3])[2:4].zfill(2)+hex(default_palette[4])[2:4].zfill(2)+hex(default_palette[5])[2:4].zfill(2)
             count = 0
-            imgs = create_temp_imgs(count, default_palette)
+            #imgs = create_temp_imgs(count, default_palette)
             #pdb.set_trace()
             diffs = np.zeros([1,len(unicodes)])
-            for img in imgs:
-                imgnp = np.asarray(img)
-                imgqnp = np.asarray(imgq)
-                diffs[0,count] = linalg.norm(imgnp-imgqnp)
-                count+=1
+            #for img in imgs:
+            imgqnp = np.asarray(imgq)
+            for i in xrange(len(unicodes)):
+                imgnp = imgsnp[i,:,:]
+                diffs[0,i] = linalg.norm(imgnp-imgqnp)
+            #np.save('imgsnp',imgsnp)
             ind = np.argmin(diffs[0])
             """
             if hh == 1 and ww == 50:
@@ -151,10 +154,14 @@ def draw(im, check=False, blockwidth=20):
                 color1 = fgshort
                 color2 = bgshort
                 block = unicodes[ind]
-            sys.stdout.write('\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block+'\033[0;00m')
+            line += '\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block+'\033[0;00m'
+            #sys.stdout.write('\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block+'\033[0;00m')
             if check:
                 sys.stdout.write(' ')
-        sys.stdout.write('\n')
+        #sys.stdout.write(line + '\n')
+        line += '\n'
+    sys.stdout.write(line)
+
 
 
 def create_temp_imgs(count,default_palette):
