@@ -42,6 +42,23 @@ u'\u2596',
 u'\u2599',
 u'\u2597',
 u'\u259f',
+
+u'\u258f',
+u'\u258e',
+u'\u258d',
+u'\u258c',
+u'\u258b',
+u'\u258a',
+u'\u2589',
+
+u'\u2589',
+u'\u258a',
+u'\u258b',
+u'\u258c',
+u'\u258d',
+u'\u258e',
+u'\u258f'
+
 ]
 
 
@@ -128,6 +145,10 @@ def main():
                 color1 = bgshort
                 color2 = fgshort
                 block = unicodes[ind]
+            elif 32 < ind and ind <40:
+                color1 = bgshort
+                color2 = fgshort
+                block = unicodes[ind]
             else:
                 color1 = fgshort
                 color2 = bgshort
@@ -140,15 +161,6 @@ def main():
 
 def create_temp_imgs(count,default_palette):
     tempimgs = []
-    """
-    for w in xrange(0,respb/2):
-        temp = Image.new('P', (respb/2,respb), 0)
-        temp.putpalette(default_palette)
-        d = ImageDraw.ImageDraw(temp)
-        d.rectangle([0, 0, w, 15], fill=1)
-        count+=1
-        tempimgs.append(temp)
-    """
     temp = Image.new('P', (respb/2,respb), 0)
     temp.putpalette(default_palette)
     d = ImageDraw.ImageDraw(temp)
@@ -205,6 +217,22 @@ def create_temp_imgs(count,default_palette):
         d = ImageDraw.ImageDraw(temp)
         for qw, qh in qwqh:
             d.rectangle([qw, qh, qw+respb/4-1, respb/2-1+qh], fill=1)
+        count+=1
+        tempimgs.append(temp)
+
+    for w in xrange(0,respb/2-1):
+        temp = Image.new('P', (respb/2,respb), 0)
+        temp.putpalette(default_palette)
+        d = ImageDraw.ImageDraw(temp)
+        d.rectangle([0, 0, w, 15], fill=1)
+        count+=1
+        tempimgs.append(temp)
+
+    for w in xrange(0,respb/2-1):
+        temp = Image.new('P', (respb/2,respb), 0)
+        temp.putpalette(default_palette)
+        d = ImageDraw.ImageDraw(temp)
+        d.rectangle([7-w,0, 7, 15], fill=1)
         count+=1
         tempimgs.append(temp)
 
