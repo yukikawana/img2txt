@@ -32,9 +32,8 @@ u'\u2582',
 u'\u2581',
 
 u'\u259f',
-u'\u2599',
-
 u'\u2596',
+u'\u2599',
 u'\u2597',
 
 u'\u259a',
@@ -96,13 +95,19 @@ def main():
                 ind = checkcount
                 checkcount += 1
                 default_palette = [255, 0,0, 0,0,255]
+                imgs = create_temp_imgs(0, default_palette)
+                c = 0
+                for img in imgs:
+                    img.save(str(c)+'.png')
+                    c+=1
                 bg = hex(default_palette[0])[2:4].zfill(2)+hex(default_palette[1])[2:4].zfill(2)+hex(default_palette[2])[2:4].zfill(2)
                 fg = hex(default_palette[3])[2:4].zfill(2)+hex(default_palette[4])[2:4].zfill(2)+hex(default_palette[5])[2:4].zfill(2)
             bgshort,rgb = colortrans.rgb2short(bg)
             fgshort,rgb = colortrans.rgb2short(fg)
             #if ind == 8+ad:
             if ind == len(unicodes):
-                return 
+                sys.stdout.write('\n')
+                return
             if ind == 0:
                 color1 = fgshort
                 color2 = fgshort
@@ -119,7 +124,7 @@ def main():
                 color1 = bgshort
                 color2 = fgshort
                 block = unicodes[ind]
-            elif ind ==16 or ind == 17 or ind == 22 or ind == 24:
+            elif ind ==16 or ind == 18 or ind == 22 or ind == 24:
                 color1 = bgshort
                 color2 = fgshort
                 block = unicodes[ind]
@@ -131,10 +136,6 @@ def main():
             if check:
                 sys.stdout.write(' ')
         sys.stdout.write('\n')
-        if check:
-            for ind in xrange(len(unicodes)):
-                sys.stdout.write('{0:02d}'.format(ind)+' ')
-            sys.stdout.write('\n')
 
 
 def create_temp_imgs(count,default_palette):
