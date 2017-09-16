@@ -1,16 +1,14 @@
 #!/usr/bin/python
-
 from PIL import Image, ImageDraw, ImageChops
 import numpy as np
 from numpy import linalg
 import sys
-sys.path.append('extra')
-import colortrans
-
 import pdb
 import argparse
 import os
-blockwidth = 35
+extra = os.path.join(os.path.dirname(os.path.abspath(__file__)),'extra')
+sys.path.append(extra)
+import colortrans
 respb = 16
 unicodes = [
 u'\u2588',
@@ -69,18 +67,18 @@ def main():
     if imagefile == 'check':
         check = True
         print len(unicodes)
-        im = Image.open('test.jpg').quantize(256)
+        im = Image.open('images/test.jpg').quantize(256)
+        draw(im, check=True)
     else:
         im = Image.open(imagefile).quantize(256)
-        check = False
+        draw(im, check=False)
+
+def draw(im, check=False, blockwidth=20):
     width, height = im.size
     ratio = float(blockwidth) / float(width)
     blockheight = int(ratio * height)
 
-    print ratio
-    print im.size
     imr = im.resize((blockwidth * respb, blockheight * respb), Image.ANTIALIAS)
-    print imr.size
     checkcount = 0
     for hh in xrange(blockheight):
         for ww in xrange(blockwidth*2):
