@@ -10,7 +10,7 @@ import colortrans
 import pdb
 import argparse
 import os
-blockwidth = 40
+blockwidth = 35
 respb = 16
 unicodes = [
 u'\u2588',
