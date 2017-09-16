@@ -4,10 +4,8 @@ import numpy as np
 from numpy import linalg
 import sys
 import pdb
-import argparse
 import os
-extra = os.path.join(os.path.dirname(os.path.abspath(__file__)),'extra')
-sys.path.append(extra)
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),'extra'))
 import colortrans
 respb = 16
 unicodes = [
@@ -89,17 +87,10 @@ def draw(im, check=False, blockwidth=20):
             default_palette =  getPaletteInRgb(imgq)
             bg = hex(default_palette[0])[2:4].zfill(2)+hex(default_palette[1])[2:4].zfill(2)+hex(default_palette[2])[2:4].zfill(2)
             fg = hex(default_palette[3])[2:4].zfill(2)+hex(default_palette[4])[2:4].zfill(2)+hex(default_palette[5])[2:4].zfill(2)
-            count = 0
-            #imgs = create_temp_imgs(count, default_palette)
-            #pdb.set_trace()
-            diffs = np.zeros([1,len(unicodes)])
-            #for img in imgs:
-            imgqnp = np.asarray(imgq)
-            for i in xrange(len(unicodes)):
-                imgnp = imgsnp[i,:,:]
-                diffs[0,i] = linalg.norm(imgnp-imgqnp)
-            #np.save('imgsnp',imgsnp)
-            ind = np.argmin(diffs[0])
+            #diff = np.asarray(imgq)- imgsnp
+            #norm = linalg.norm(diff,axis=(1,2))
+            #ind = np.argmin(norm)
+            ind = np.argmin(linalg.norm(np.asarray(imgq)-imgsnp,axis=(1,2)))
             """
             if hh == 1 and ww == 50:
                 print np.argmin(diffs[0])
@@ -134,19 +125,7 @@ def draw(im, check=False, blockwidth=20):
                 color1 = bgshort
                 color2 = bgshort
                 block = ' '
-            elif 0 < ind and ind < 8:
-                color1 = fgshort
-                color2 = bgshort
-                block = unicodes[ind]
-            elif 8 < ind and ind <16:
-                color1 = bgshort
-                color2 = fgshort
-                block = unicodes[ind]
-            elif ind ==16 or ind == 18 or ind == 22 or ind == 24:
-                color1 = bgshort
-                color2 = fgshort
-                block = unicodes[ind]
-            elif 32 < ind and ind <40:
+            elif (32 < ind and ind <40) or (8 < ind and ind <16) or ind ==16 or ind == 18 or ind == 22 or ind == 24:
                 color1 = bgshort
                 color2 = fgshort
                 block = unicodes[ind]
