@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+#2017
 from PIL import Image, ImageDraw, ImageChops
 import numpy as np
 from numpy import linalg
