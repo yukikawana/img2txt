@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 from PIL import Image, ImageDraw, ImageChops
 import numpy as np
 from numpy import linalg
@@ -136,7 +137,7 @@ def draw(im, check=False, blockwidth=20, multi=1):
                 color1 = fgshort
                 color2 = bgshort
                 block = unicodes[ind]
-            line += '\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block+'\033[0;00m'
+            line += '\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block.encode('utf-8')+'\033[0;00m'
             #sys.stdout.write('\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block+'\033[0;00m')
             if check:
                 sys.stdout.write(' ')
@@ -250,7 +251,7 @@ def multidraw(part, blockwidth):
         color1 = fgshort
         color2 = bgshort
         block = unicodes[ind]
-    char = '\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block+'\033[0;00m'
+    char = '\033[38;5;{0};48;5;{1}m'.format(color1,color2)+block.encode('utf-8')+'\033[0;00m'
 
     return char
  
