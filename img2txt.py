@@ -5,8 +5,7 @@ from numpy import linalg
 import sys
 import pdb
 import os
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),'extra'))
-import colortrans
+from extra import colortrans
 respb = 16
 imgsnp = np.load('imgsnp.npy')
 unicodes = [
