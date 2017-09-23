@@ -6,7 +6,6 @@ import os
 blockwidth = 30
 respb = 16
 
-
 def main():
     im = Image.open('yad2k/images/horses.jpg')
     width, height = im.size
